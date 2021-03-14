@@ -21,8 +21,13 @@ public class AuthenticatedController {
     }
 
 
+
     @GetMapping("/login")
     public void login(){
+    }
+
+    @PostMapping("/login")
+    public void successLogin(){
     }
 
     @GetMapping("/registry")
@@ -39,6 +44,11 @@ public class AuthenticatedController {
         user.setRole(ROLE_USER);
         userService.save(user);
     return user;
+    }
+
+    @GetMapping("/hello")
+    public String get(){
+    return "hello";
     }
 
 

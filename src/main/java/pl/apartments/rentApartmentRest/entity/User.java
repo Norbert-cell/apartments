@@ -10,6 +10,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Entity
 @Data
@@ -17,13 +18,14 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter(AccessLevel.PROTECTED)
     private long id;
 
     @UniqueEmail
     private String username;
 
     private String firstName;
+
+    private String firmName;
 
     private String lastName;
 
@@ -33,6 +35,16 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "tenantUser", cascade = CascadeType.REMOVE)
+    private Apartment rentedHouse;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "ownerUser", cascade = CascadeType.REMOVE)
+    private List<Apartment> auctions;
+
+    private String nip;
+
+    private String regon;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
